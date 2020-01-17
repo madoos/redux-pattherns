@@ -1,0 +1,1 @@
+export const preventDefault = (f) => (e) => { return (e.preventDefault(), f(e)) }
