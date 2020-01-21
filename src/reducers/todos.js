@@ -1,24 +1,20 @@
 import { TODO } from '../constants'
-import { merge, not, evolve, update } from 'ramda'
+import { normalizeTodos } from '../schema'
 
-let index = 0
-const addId = (todo) => merge(todo, { id: index++})
+const initialState = { /* [id]: Todo */}
 
-const addTodo = (todos, todo) => todos.concat(addId(todo))
+const upsertTodo = (todos, todo) => ({ ...todos, [todo.id]: todo})
 
-const toggleTodo = (todos, { id }) => {
-    const todo =  evolve({ completed: not }, todos[id])
-    return update(id, todo, todos)
-}
-
-const todos = (todos = [], action) => {
+const todos = (state = initialState, action) => {
     switch(action.type){
+        case TODO.LIST_TODOS:
+            return normalizeTodos(action.payload)
         case TODO.ADD_TODO:
-            return addTodo(todos, action.payload)
+            return upsertTodo(state, action.payload)
         case TODO.TOGGLE_TODO:
-            return toggleTodo(todos, action.payload)
+            return upsertTodo(state, action.payload)
         default:
-            return todos
+            return state
     }
 }
 

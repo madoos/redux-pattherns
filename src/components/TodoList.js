@@ -5,7 +5,7 @@ import { map } from 'ramda'
 const TodoList = ({ todos, onTodoClick }) => (
     <ul>
       {map(
-          todo => (<Todo {...todo} key={todo.id} onClick={() => onTodoClick(todo.id)} />),
+          todo => (<Todo {...todo} key={todo.id} onClick={() => onTodoClick(todo)} />),
           todos
       )}
     </ul>

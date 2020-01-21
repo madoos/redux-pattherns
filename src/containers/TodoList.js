@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { compose, pipe, pick, prop, evolve, curry, propEq, filter } from 'ramda'
+import { compose, pipe, pick, prop, evolve, curry, propEq, filter, cond, T, values } from 'ramda'
 import TodoList from '../components/TodoList'
 import { toggleTodo } from '../actions/todos'
 import { mapProps } from 'recompose'
@@ -7,14 +7,11 @@ import { mapProps } from 'recompose'
 import {FILTERS} from '../constants'
 
 const filerTodos = curry((visibilityFilter, todos) => {
-    switch(visibilityFilter){
-        case FILTERS.SHOW_COMPLETED:
-            return filter(prop('completed'), todos)
-        case FILTERS.SHOW_ACTIVE:
-            return filter(propEq('completed', false), todos)
-        default:
-            return todos
-    }
+    return filter(cond([
+        [() => visibilityFilter === FILTERS.SHOW_COMPLETED, prop('completed')],
+        [() => visibilityFilter === FILTERS.SHOW_ACTIVE, propEq('completed', false)],
+        [T, T]
+    ]), todos)
 })
 
 const enhance = compose(
@@ -24,7 +21,7 @@ const enhance = compose(
     ),
     mapProps((props) => {
         const { visibilityFilter } = props
-        return evolve({ todos: filerTodos(visibilityFilter)}, props) 
+        return evolve({ todos: pipe(values, filerTodos(visibilityFilter))}, props) 
     })
 )
 

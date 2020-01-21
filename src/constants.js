@@ -7,5 +7,6 @@ export const FILTERS = {
 
 export const TODO = {
     ADD_TODO: 'ADD_TODO',
-    TOGGLE_TODO: 'TOGGLE_TODO'
+    TOGGLE_TODO: 'TOGGLE_TODO',
+    LIST_TODOS: 'LIST_TODOS'
 }

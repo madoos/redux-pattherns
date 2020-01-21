@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { isEmpty } from 'ramda'
 
-class AddTodo extends React.Component {
-    render() {
-      return (
-        <div>
-          <input type="text" ref="input" />
-          <button onClick={e => this.handleClick(e)}>Add</button>
-        </div>
-      );
+
+const AddTodo = ({ onAddClick }) => {
+  const inputEl = useRef(null);
+
+  const onButtonClick = () => {
+    const text = inputEl.current.value.trim();
+    if(!isEmpty(text)){
+      onAddClick(text);
     }
-  
-    handleClick() {
-      const node = this.refs.input;
-      const text = node.value.trim();
-      if(!isEmpty(text)){
-        this.props.onAddClick(text);
-      }
-      node.value = '';
-    }
-  }
+    inputEl.current.value = '';
+  };
+
+  return (
+     <div>
+      <input ref={inputEl} type="text" />
+      <button onClick={onButtonClick}>Add Todo</button>
+    </div>
+  );
+}
+
+
 
 export default AddTodo
