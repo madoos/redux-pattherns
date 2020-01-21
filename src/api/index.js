@@ -15,17 +15,17 @@ const TODOS = [
 
 // addTodo :: String -> Promise { text, id, complete }
 const createTodo = pipeP(
-    delay(500),
+    delay(750),
     Todo,
     tap(todo => TODOS.push(todo))
 )
 
 // getTodos :: () -> Promise [Todo]
-const getTodos = () => delay(250, TODOS)
+const getTodos = () => delay(750, TODOS)
 
 // updateTodo :: Obj -> Todo
 const updateTodo = pipeP(
-    delay(250),
+    delay(750),
     (data) => {
         const {id} = data
         const idx = findIndex(propEq('id', id), TODOS)

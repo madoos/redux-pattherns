@@ -1,19 +1,31 @@
 import { TODO } from "../constants"
-import api from '../api'
-import { evolve, not } from "ramda"
 
-export const addTodo = (text) => (dispatch) => {
-    return api.createTodo(text)
-            .then(todo => ({ type: TODO.ADD_TODO, payload: todo}))
-            .then(dispatch)
-}
+export const addTodo = (text) => ({ 
+    type: TODO.ADD_TODO, 
+    payload: text
+})
 
-export const toggleTodo = (todo) => (dispatch) => {
-    const updated = evolve({ completed: not }, todo)
-    return api.updateTodo(updated).then((updatedTodo) => ({
-        type: TODO.TOGGLE_TODO,
-        payload: updatedTodo
-    })).then(dispatch)
-}
+export const addTodoSuccess = (todo) => ({ 
+    type: TODO.ADD_TODO_SUCCESS, 
+    payload: todo
+})
 
-export const listTodos = (dispatch) => api.getTodos().then((todos) => ({ type: TODO.LIST_TODOS, payload: todos })).then(dispatch)
+export const toggleTodo = (todo) => ({
+    type: TODO.TOGGLE_TODO,
+    payload: todo
+})
+
+export const fetchTodos = () => ({
+    type: TODO.FETCHING_TODOS,
+    payload: {}
+})
+
+export const successTodos = (todos) => ({
+    type: TODO.SUCCESS_TODOS,
+    payload: todos
+})
+
+export const toggleTodoSuccess = (todo) => ({
+    type: TODO.TOGGLE_TODO_SUCCESS,
+    payload: todo
+})

@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AddTodo from './containers/AddTodo'
 import TodoList from './containers/TodoList'
 import Footer from './containers/Footer'
-import { listTodos } from './actions/todos'
 import { connect } from 'react-redux';
-
+import { pick } from 'ramda';
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
-const App =  ({ dispatch }) => {
-  useEffect(() => {
-    dispatch(listTodos)
-  })
-
+const App =  ({ loading }) => {
   return <div>
     <AddTodo/>
     <TodoList />
     <Footer/>
+    {loading && <p>Loading...</p>}
   </div>
 }
 
-export default connect()(App);
+export default connect(pick(['loading']))(App);

@@ -17,7 +17,7 @@ const filerTodos = curry((visibilityFilter, todos) => {
 const enhance = compose(
     connect(
         pick(['todos', 'visibilityFilter']),
-        (dispatch) => ({ onTodoClick: pipe(toggleTodo, dispatch) }) 
+        { onTodoClick: toggleTodo }
     ),
     mapProps((props) => {
         const { visibilityFilter } = props

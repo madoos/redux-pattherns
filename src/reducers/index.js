@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import todos from './todos'
 import visibilityFilter from './visibilityFilter'
+import loading from './loading'
 
 const reducer = combineReducers({
   todos,
-  visibilityFilter
+  visibilityFilter,
+  loading
 })
 
 export default reducer
